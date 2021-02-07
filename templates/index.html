@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>PlayGround Task</title>
+</head>
+<body>
+    <div id="app">
+        <input type="text" v-model="text" @keyup.enter="onClick">
+        <br><br>
+        <div v-html="responseText"></div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                text: null,
+                responseText: null,
+                url: '/index.php/parser',
+                method: 'POST',
+                httpOk: 200
+            },
+            methods: {
+                onClick() {
+                    let xhr = new XMLHttpRequest();
+                    xhr.open(this.method, this.url);
+
+                    xhr.onload = () => {
+                        this.responseText = xhr.response;
+                    };
+
+                    xhr.send(this.text);
+                }
+            }
+        })
+    </script>
+</body>
+</html>
